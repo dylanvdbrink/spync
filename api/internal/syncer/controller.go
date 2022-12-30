@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"math/rand"
+	"time"
 )
 
 var wsupgrader = websocket.Upgrader{
@@ -16,6 +17,7 @@ var wsupgrader = websocket.Upgrader{
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 func randSeq(n int) string {
+	rand.Seed(time.Now().UTC().UnixNano())
 	b := make([]rune, n)
 	for i := range b {
 		b[i] = letters[rand.Intn(len(letters))]
