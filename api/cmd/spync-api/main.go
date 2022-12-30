@@ -48,6 +48,7 @@ func main() {
 	router.GET("/spotify/me/playlists", spotify.GetPlaylistsEndpoint)
 	router.GET("/spotify/me/playlists/:playlistId/tracks", spotify.GetPlaylistTracksEndpoint)
 
+	router.GET("/sync/status", syncer.StatusSocket)
 	router.POST("/sync/playlist/:playlistId", syncer.SyncPlaylistEndpoint)
 	router.POST("/sync/all", syncer.SyncPlaylistsEndpoint)
 

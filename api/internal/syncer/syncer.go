@@ -25,6 +25,8 @@ func SyncPlaylist(playlistId string) error {
 		return err
 	}
 
+	SendToAll(StatusMessage{Syncing: true})
+
 	defer func(finalState state.State) {
 		finalState.Syncing = false
 		_ = state.SaveState(finalState)
@@ -103,7 +105,9 @@ func SyncPlaylist(playlistId string) error {
 	if err != nil {
 		return err
 	}
-	logger.Debug("setting last sync date to", time.Now())
+	logger.Debug("setting last sync date to: ", time.Now())
+
+	SendToAll(StatusMessage{Syncing: false})
 
 	return nil
 }
