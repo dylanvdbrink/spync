@@ -1,13 +1,12 @@
-package controllers
+package configuration
 
 import (
-	"api/internal/configuration"
 	"github.com/gin-gonic/gin"
 	"log"
 )
 
-func GetSettings(c *gin.Context) {
-	config, err := configuration.GetConfiguration()
+func GetSettingsEndpoint(c *gin.Context) {
+	config, err := GetConfiguration()
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": err.Error(),
@@ -17,8 +16,8 @@ func GetSettings(c *gin.Context) {
 	}
 }
 
-func SaveSettings(c *gin.Context) {
-	var config configuration.Config
+func SaveSettingsEndpoint(c *gin.Context) {
+	var config Config
 	decodeErr := c.BindJSON(&config)
 	if decodeErr != nil {
 		log.Println("decoding error: " + decodeErr.Error())
@@ -27,7 +26,7 @@ func SaveSettings(c *gin.Context) {
 		})
 		return
 	} else {
-		saveErr := configuration.SaveConfiguration(config)
+		saveErr := SaveConfiguration(config, true)
 		if saveErr != nil {
 			log.Println("save error: " + saveErr.Error())
 			c.JSON(400, gin.H{
